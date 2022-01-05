@@ -113,7 +113,7 @@ class CharactersDaoTest : BaseTest() {
         val item = testItems.first()
         dao.insert(item)
 
-        dao.entry(item.id).test {
+        dao.entry(item.getIdentifier()).test {
             assertThat(awaitItem()).isEqualTo(item)
         }
     }
@@ -121,7 +121,7 @@ class CharactersDaoTest : BaseTest() {
     @Test
     fun entryNullable() = runTest {
         val item = testItems.first()
-        dao.entryNullable(item.id).test {
+        dao.entryNullable(item.getIdentifier()).test {
             assertThat(awaitItem()).isNull()
         }
     }
@@ -130,7 +130,7 @@ class CharactersDaoTest : BaseTest() {
     fun entriesById() = runTest {
         dao.insertAll(testItems)
 
-        dao.entriesById(testItems.map { it.id }).test {
+        dao.entriesById(testItems.map { it.getIdentifier() }).test {
             assertThat(awaitItem()).containsExactlyElementsIn(testItems)
         }
     }
@@ -139,9 +139,9 @@ class CharactersDaoTest : BaseTest() {
     fun delete() = runTest {
         val item = testItems.first()
         dao.insert(item)
-        dao.delete(item.id)
+        dao.delete(item.getIdentifier())
 
-        assertThat(dao.exists(item.id)).isEqualTo(0)
+        assertThat(dao.exists(item.getIdentifier())).isEqualTo(0)
     }
 
     @Test
@@ -150,7 +150,7 @@ class CharactersDaoTest : BaseTest() {
         dao.insert(item)
         dao.delete(testParams)
 
-        assertThat(dao.exists(item.id)).isEqualTo(0)
+        assertThat(dao.exists(item.getIdentifier())).isEqualTo(0)
     }
 
     @Test
@@ -160,7 +160,7 @@ class CharactersDaoTest : BaseTest() {
         dao.insertAll(items)
         dao.delete(testParams, page)
 
-        dao.entriesById(items.map { it.id }).test {
+        dao.entriesById(items.map { it.getIdentifier() }).test {
             assertThat(awaitItem()).isEmpty()
         }
     }
@@ -208,7 +208,7 @@ class CharactersDaoTest : BaseTest() {
         val item = testItems.first()
         dao.insert(item)
 
-        assertThat(dao.exists(item.id)).isEqualTo(1)
+        assertThat(dao.exists(item.getIdentifier())).isEqualTo(1)
     }
 
     @Test
@@ -216,9 +216,9 @@ class CharactersDaoTest : BaseTest() {
         val item = testItems.first()
         dao.insert(item)
 
-        dao.has(item.id).test {
+        dao.has(item.getIdentifier()).test {
             assertThat(awaitItem()).isEqualTo(1)
-            dao.delete(item.id)
+            dao.delete(item.getIdentifier())
             assertThat(awaitItem()).isEqualTo(0)
         }
     }

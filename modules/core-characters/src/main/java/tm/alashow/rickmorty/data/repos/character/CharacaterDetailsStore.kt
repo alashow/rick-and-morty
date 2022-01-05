@@ -57,14 +57,14 @@ object CharacterDetailsStoreModule {
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { params: CharacterParams ->
-                dao.entryNullable(params.id).sourceReaderFilter(lastRequests, params)
+                dao.entryNullable(params.id.toString()).sourceReaderFilter(lastRequests, params)
             },
             writer = { params, response ->
                 dao.withTransaction {
                     dao.updateOrInsert(response)
                 }
             },
-            delete = { dao.delete(it.id) },
+            delete = { dao.delete(it.id.toString()) },
             deleteAll = { dao.deleteAll() },
         )
     ).build()

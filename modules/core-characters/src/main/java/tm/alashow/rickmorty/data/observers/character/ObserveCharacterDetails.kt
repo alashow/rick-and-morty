@@ -15,7 +15,7 @@ import tm.alashow.rickmorty.domain.entities.Character
 class ObserveCharacter @Inject constructor(
     private val charactersDao: CharactersDao,
 ) : SubjectInteractor<CharacterParams, Character>() {
-    override fun createObservable(params: CharacterParams): Flow<Character> = charactersDao.entry(params.id)
+    override fun createObservable(params: CharacterParams): Flow<Character> = charactersDao.entry(params.id.toString())
 }
 
 class ObserveCharacterDetails @Inject constructor(

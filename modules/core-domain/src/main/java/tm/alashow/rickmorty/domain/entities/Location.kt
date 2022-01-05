@@ -6,21 +6,17 @@ package tm.alashow.rickmorty.domain.entities
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import tm.alashow.domain.models.BasePaginatedEntity
 
-typealias CharacterId = Long
-
-const val UNKNOWN = "Unknown"
+typealias LocationId = Long
 
 @Parcelize
 @Serializable
-@Entity(tableName = "characters")
-data class Character(
+data class Location(
     @SerialName("id")
     @ColumnInfo(name = "id")
     val id: CharacterId = 0L,
@@ -29,25 +25,17 @@ data class Character(
     @ColumnInfo(name = "name")
     val name: String = UNKNOWN,
 
-    @SerialName("status")
-    @ColumnInfo(name = "status")
-    val status: String = UNKNOWN,
-
-    @SerialName("species")
-    @ColumnInfo(name = "species")
-    val species: String = UNKNOWN,
-
-    @SerialName("gender")
-    @ColumnInfo(name = "gender")
-    val gender: String = UNKNOWN,
+    @SerialName("dimension")
+    @ColumnInfo(name = "dimension")
+    val dimension: String = "",
 
     @SerialName("type")
     @ColumnInfo(name = "type")
     val type: String = "",
 
-    @SerialName("image")
-    @ColumnInfo(name = "image")
-    val imageUrl: String = "",
+    @SerialName("residents")
+    @ColumnInfo(name = "residents")
+    val residents: List<String> = emptyList(),
 
     @SerialName("url")
     @ColumnInfo(name = "url")

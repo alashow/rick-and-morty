@@ -21,7 +21,7 @@ class CharacterDetailViewModel @Inject constructor(
     private val characterDetails: ObserveCharacterDetails
 ) : ViewModel() {
 
-    private val characterParams = CharacterParams(handle.get<String>(CHARACTER_ID_KEY) ?: "todo-non-nullable")
+    private val characterParams = CharacterParams(handle.get<Long>(CHARACTER_ID_KEY) ?: -1L)
 
     init {
         load()

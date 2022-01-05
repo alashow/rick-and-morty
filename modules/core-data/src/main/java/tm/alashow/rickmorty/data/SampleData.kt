@@ -20,7 +20,7 @@ object SampleData {
     val Character: Character = character()
 
     fun character() = Character(
-        id = random.sid(),
+        id = random.id(),
         primaryKey = "sample-character-${random.id()}",
         searchIndex = random.nextInt(),
         page = random.nextInt(),
