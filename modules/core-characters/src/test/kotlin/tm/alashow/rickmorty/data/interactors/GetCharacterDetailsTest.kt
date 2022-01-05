@@ -38,18 +38,27 @@ class GetCharacterDetailsTest : BaseTest() {
     }
 
     @Test
-    fun `get character details by id = 1 returns Rick Sanchez character`() = runTest {
+    fun `get character details by id = 1 returns Rick Sanchez character with origin & location details`() = runTest {
         val result = getCharacterDetails.execute(testParams.copy(characterId = 1))
 
         assertThat(result.name)
-            .contains("Rick Sanchez")
+            .isEqualTo("Rick Sanchez")
+
+        assertThat(result.origin.dimension)
+            .contains("Dimension C-137")
+        assertThat(result.location.residents)
+            .isNotEmpty()
     }
 
     @Test
-    fun `get character details by id = 2 return Morty Smith character`() = runTest {
+    fun `get character details by id = 2 return Morty Smith character with origin & location details`() = runTest {
         val result = getCharacterDetails.execute(testParams.copy(characterId = 2))
 
         assertThat(result.name)
-            .contains("Morty Smith")
+            .isEqualTo("Morty Smith")
+        assertThat(result.origin.id)
+            .isEqualTo(0)
+        assertThat(result.location.residents)
+            .isNotEmpty()
     }
 }

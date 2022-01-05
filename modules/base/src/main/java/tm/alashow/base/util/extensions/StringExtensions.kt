@@ -4,7 +4,7 @@
  */
 package tm.alashow.base.util.extensions
 
-fun String?.orNA() = when (this.isNullOrEmpty()) {
+fun String?.orNA(ifBlank: Boolean = false) = when (this.isNullOrEmpty() || (ifBlank && this.isBlank())) {
     false -> this
     else -> "N/A"
 }

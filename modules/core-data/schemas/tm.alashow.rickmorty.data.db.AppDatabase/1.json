@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9ecae21304abd4ddddf4d9f1bcb463b1",
+    "identityHash": "15609f5a00cb21be4725c0049e3ac4c7",
     "entities": [
       {
         "tableName": "characters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `status` TEXT NOT NULL, `species` TEXT NOT NULL, `gender` TEXT NOT NULL, `type` TEXT NOT NULL, `image` TEXT NOT NULL, `url` TEXT NOT NULL, `params` TEXT NOT NULL, `page` INTEGER NOT NULL, `primaryKey` TEXT NOT NULL, `search_index` INTEGER NOT NULL, PRIMARY KEY(`primaryKey`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `status` TEXT NOT NULL, `species` TEXT NOT NULL, `gender` TEXT NOT NULL, `type` TEXT NOT NULL, `image` TEXT NOT NULL, `url` TEXT NOT NULL, `origin` TEXT NOT NULL, `location` TEXT NOT NULL, `params` TEXT NOT NULL, `page` INTEGER NOT NULL, `primaryKey` TEXT NOT NULL, `search_index` INTEGER NOT NULL, PRIMARY KEY(`primaryKey`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -57,6 +57,18 @@
             "notNull": true
           },
           {
+            "fieldPath": "origin",
+            "columnName": "origin",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "params",
             "columnName": "params",
             "affinity": "TEXT",
@@ -94,7 +106,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9ecae21304abd4ddddf4d9f1bcb463b1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '15609f5a00cb21be4725c0049e3ac4c7')"
     ]
   }
 }

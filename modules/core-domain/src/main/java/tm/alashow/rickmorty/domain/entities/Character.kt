@@ -53,6 +53,14 @@ data class Character(
     @ColumnInfo(name = "url")
     val url: String = "",
 
+    @SerialName("origin")
+    @ColumnInfo(name = "origin")
+    val origin: Location = Location(),
+
+    @SerialName("location")
+    @ColumnInfo(name = "location")
+    val location: Location = Location(),
+
     @SerialName("params")
     @ColumnInfo(name = "params")
     override var params: String = defaultParams,

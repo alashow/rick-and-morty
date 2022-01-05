@@ -122,7 +122,7 @@ class CharactersDaoTest : BaseTest() {
     fun entryNullable() = runTest {
         val item = testItems.first()
         dao.entryNullable(item.getIdentifier()).test {
-            assertThat(dao.entryNullable(item.getIdentifier())).isNull()
+            assertThat(awaitItem()).isNull()
         }
     }
 

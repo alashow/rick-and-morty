@@ -19,19 +19,19 @@ typealias LocationId = Long
 data class Location(
     @SerialName("id")
     @ColumnInfo(name = "id")
-    val id: CharacterId = 0L,
+    val id: LocationId = 0L,
 
     @SerialName("name")
     @ColumnInfo(name = "name")
     val name: String = UNKNOWN,
 
-    @SerialName("dimension")
-    @ColumnInfo(name = "dimension")
-    val dimension: String = "",
-
     @SerialName("type")
     @ColumnInfo(name = "type")
     val type: String = "",
+
+    @SerialName("dimension")
+    @ColumnInfo(name = "dimension")
+    val dimension: String = "",
 
     @SerialName("residents")
     @ColumnInfo(name = "residents")
@@ -58,4 +58,6 @@ data class Location(
 ) : BasePaginatedEntity(), Parcelable {
 
     override fun getIdentifier() = id.toString()
+
+    val isUnknown get() = name.isBlank() || name.lowercase() == "unknown"
 }

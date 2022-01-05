@@ -41,8 +41,13 @@ class ObserveCharacterDetailsTest : BaseTest() {
             .isEqualTo("Rick Sanchez")
 
         observeCharacterDetails.flow.test {
-            assertThat(awaitItem().name)
+            val result = awaitItem()
+            assertThat(result.name)
                 .isEqualTo("Rick Sanchez")
+            assertThat(result.origin.dimension)
+                .contains("Dimension C-137")
+            assertThat(result.location.residents)
+                .isNotEmpty()
         }
     }
 }

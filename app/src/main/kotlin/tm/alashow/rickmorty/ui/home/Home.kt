@@ -33,11 +33,12 @@ internal fun Home(
         scaffoldState = scaffoldState,
         snackbarHost = { DismissableSnackbarHost(it) },
         bottomBar = {
-            HomeBottomNavigation(
-                selectedTab = selectedTab,
-                onNavigationSelected = { selected -> navController.selectRootScreen(selected) },
-                modifier = Modifier.fillMaxWidth(),
-            )
+            if (HomeNavigationItems.size > 1)
+                HomeBottomNavigation(
+                    selectedTab = selectedTab,
+                    onNavigationSelected = { selected -> navController.selectRootScreen(selected) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
         }
     ) {
         AppNavigation(navController = navController)

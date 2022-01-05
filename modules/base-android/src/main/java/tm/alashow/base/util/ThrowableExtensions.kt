@@ -47,10 +47,7 @@ fun Throwable?.toUiMessage() = when (this) {
 
 fun ApiErrorException.localizeApiError(): Int = when (val errorRes = errorRes) {
     is Int -> errorRes
-    else -> when (error.id) {
-        "unknown" -> R.string.error_unknown
-        else -> R.string.error_api
-    }
+    else -> R.string.error_api
 }
 
 val localizedApiMessages = mapOf(

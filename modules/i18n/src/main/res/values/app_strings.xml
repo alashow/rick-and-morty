@@ -9,4 +9,14 @@
     <string name="app_label">Rick and Morty</string>
 
     <string name="characters.title">Characters</string>
+
+    <string name="character.name">Name</string>
+    <string name="character.status">Status</string>
+    <string name="character.species">Species</string>
+    <string name="character.type">Type</string>
+    <string name="character.location">Location</string>
+    <string name="character.location.name">Name</string>
+    <string name="character.location.type">Type</string>
+    <string name="character.location.dimension">Dimension</string>
+    <string name="character.location.residents">Number of Residents</string>
 </resources>

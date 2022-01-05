@@ -26,7 +26,7 @@ import kotlin.random.Random
 fun parseColor(hexColor: String) = Color(AndroidColor.parseColor(hexColor))
 fun Int.toColor() = Color(this)
 
-val Primary = Color(0xFF93cdc9)
+val Primary = Color(0xFF25325d)
 val PrimaryVariant = Color(0xFF93cdc9)
 val Secondary = Color(0xFFf9e234)
 val SecondaryVariant = Color(0xFFf9e234)
@@ -81,10 +81,11 @@ fun appLightColors(
     secondary: Color,
     primaryVariant: Color = primary,
     secondaryVariant: Color = secondary,
-    background: Color = Color.White,
-    surface: Color = Color.White,
-    onPrimary: Color = Color.White,
-    onSecondary: Color = Color.White,
+    background: Color = primaryVariant,
+    surface: Color = primaryVariant,
+    onBackground: Color = Color.Black,
+    onPrimary: Color = Color.Black,
+    onSecondary: Color = Color.Black,
     onSurface: Color = Color.Black,
 ) = AppColors(
     _materialColors = lightColors(
@@ -95,6 +96,7 @@ fun appLightColors(
         onSecondary = onSecondary,
         secondaryVariant = secondaryVariant,
         background = background,
+        onBackground = onBackground,
         surface = surface,
         onSurface = onSurface,
     )

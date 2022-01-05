@@ -12,7 +12,6 @@ import tm.alashow.rickmorty.data.api.RickAndMortyEndpoints
 import tm.alashow.rickmorty.data.db.daos.CharactersDao
 import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.domain.entities.CharacterId
-import tm.alashow.rickmorty.domain.models.errors.NotFoundException
 
 class CharacterDetailDataSource @Inject constructor(
     private val dao: CharactersDao,
@@ -21,8 +20,22 @@ class CharacterDetailDataSource @Inject constructor(
 ) {
     suspend operator fun invoke(params: CharacterId): Result<Character> {
         return resultApiCall(dispatchers.network) {
-            val result = dao.entryNullable(params.toString()).first() ?: endpoints.character(params) ?: throw NotFoundException()
-            result
+            // get it from database or fallback to network
+            val result = dao.entryNullable(params.toString()).first() ?: endpoints.character(params)
+
+            val locationDetails = when (result.location.isUnknown) {
+                true -> result.location
+                else -> endpoints.locationByUrl(result.location.url)
+            }
+            val originDetails = when (result.origin.isUnknown) {
+                true -> result.origin
+                else -> endpoints.locationByUrl(result.origin.url)
+            }
+
+            result.copy(
+                origin = originDetails,
+                location = locationDetails
+            )
         }
     }
 }
