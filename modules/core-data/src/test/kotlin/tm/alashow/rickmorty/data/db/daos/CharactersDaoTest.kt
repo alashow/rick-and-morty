@@ -13,7 +13,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Test
 import tm.alashow.base.testing.BaseTest
-import tm.alashow.rickmorty.data.SearchParams
+import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.SampleData
 import tm.alashow.rickmorty.data.db.AppDatabase
 import tm.alashow.rickmorty.data.db.DatabaseModule
@@ -30,7 +30,7 @@ class CharactersDaoTest : BaseTest() {
     lateinit var dao: CharactersDao
 
     private val testItems = (1..5).map { SampleData.character() }
-    private val testParams = SearchParams("test")
+    private val testParams = CharactersParams("test")
     private val entriesComparator = compareBy(Character::page, Character::searchIndex)
 
     @After
@@ -122,7 +122,7 @@ class CharactersDaoTest : BaseTest() {
     fun entryNullable() = runTest {
         val item = testItems.first()
         dao.entryNullable(item.getIdentifier()).test {
-            assertThat(awaitItem()).isNull()
+            assertThat(dao.entryNullable(item.getIdentifier())).isNull()
         }
     }
 

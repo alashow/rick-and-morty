@@ -100,7 +100,6 @@ abstract class PaginatedEntryDao<Params : Any, E : PaginatedEntity> : EntityDao<
         insert(entity)
     }
 
-    @Transaction
     open suspend fun update(params: Params, page: Int, entities: List<E>) {
         delete(params, page)
         insertAll(entities)

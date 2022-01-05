@@ -4,7 +4,8 @@
  */
 package tm.alashow.rickmorty.domain.models.errors
 
-class EmptyResultException(override val message: String = "Result was empty") : RuntimeException(message)
+class NotFoundException(override val message: String = "Not found") : ApiErrorException(message)
+class EmptyResultException(override val message: String = "Result was empty") : ApiErrorException(message)
 
 fun <T> List<T>?.throwOnEmpty() = if (isNullOrEmpty()) throw EmptyResultException() else this
 

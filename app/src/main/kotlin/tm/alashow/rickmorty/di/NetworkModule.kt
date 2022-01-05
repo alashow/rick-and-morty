@@ -10,18 +10,18 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level as LogLevel
 import retrofit2.Retrofit
 import tm.alashow.Config
 import tm.alashow.domain.models.DEFAULT_JSON_FORMAT
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
-import okhttp3.logging.HttpLoggingInterceptor.Level as LogLevel
 
 @InstallIn(SingletonComponent::class)
 @Module

@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.graphics.Color
 import tm.alashow.base.ui.ThemeState
 
 val LocalThemeState = staticCompositionLocalOf<ThemeState> {

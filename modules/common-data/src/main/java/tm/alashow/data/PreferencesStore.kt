@@ -11,6 +11,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -21,7 +22,6 @@ import tm.alashow.domain.models.DEFAULT_JSON_FORMAT
 import tm.alashow.domain.models.None
 import tm.alashow.domain.models.Optional
 import tm.alashow.domain.models.some
-import javax.inject.Inject
 
 private const val STORE_NAME = "app_preferences"
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = STORE_NAME)

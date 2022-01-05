@@ -7,9 +7,9 @@ package tm.alashow.rickmorty.data.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import tm.alashow.domain.models.BaseTypeConverters
 import tm.alashow.rickmorty.data.db.daos.CharactersDao
 import tm.alashow.rickmorty.domain.entities.Character
-import tm.alashow.domain.models.BaseTypeConverters
 
 @Database(
     version = 1,

@@ -14,13 +14,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.navigation
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import tm.alashow.common.compose.collectEvent
-import tm.alashow.rickmorty.ui.character.CharacterDetail
 import tm.alashow.navigation.LocalNavigator
 import tm.alashow.navigation.NavigationEvent
 import tm.alashow.navigation.Navigator
 import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.navigation.screens.RootScreen
 import tm.alashow.navigation.screens.composableScreen
+import tm.alashow.rickmorty.ui.character.CharacterDetail
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable

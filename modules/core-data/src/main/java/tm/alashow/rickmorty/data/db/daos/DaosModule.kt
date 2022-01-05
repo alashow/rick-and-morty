@@ -9,7 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tm.alashow.data.db.PaginatedEntryDao
-import tm.alashow.rickmorty.data.SearchParams
+import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.db.AppDatabase
 import tm.alashow.rickmorty.domain.entities.Character
 
@@ -21,5 +21,5 @@ class DaosModule {
     fun charactersDao(db: AppDatabase) = db.charactersDao()
 
     @Provides
-    fun charactersDaoBase(db: AppDatabase): PaginatedEntryDao<SearchParams, Character> = db.charactersDao()
+    fun charactersDaoBase(db: AppDatabase): PaginatedEntryDao<CharactersParams, Character> = db.charactersDao()
 }

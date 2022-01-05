@@ -7,12 +7,12 @@ package tm.alashow.rickmorty.ui.character
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import tm.alashow.navigation.screens.CHARACTER_ID_KEY
 import tm.alashow.rickmorty.data.CharacterParams
 import tm.alashow.rickmorty.data.interactors.character.GetCharacterDetails
 import tm.alashow.rickmorty.data.observers.character.ObserveCharacter
 import tm.alashow.rickmorty.data.observers.character.ObserveCharacterDetails
-import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(

@@ -4,10 +4,10 @@
  */
 package tm.alashow.rickmorty.data
 
-import tm.alashow.rickmorty.domain.entities.Character
 import java.util.*
 import kotlin.math.abs
 import kotlin.random.Random
+import tm.alashow.rickmorty.domain.entities.Character
 
 object SampleData {
     private val random = Random(1000)

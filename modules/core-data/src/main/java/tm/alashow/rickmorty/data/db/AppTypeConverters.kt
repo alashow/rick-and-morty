@@ -6,10 +6,10 @@ package tm.alashow.rickmorty.data.db
 
 import androidx.room.TypeConverter
 import kotlinx.serialization.builtins.ListSerializer
-import tm.alashow.rickmorty.data.CharacterParams
+import tm.alashow.domain.models.DEFAULT_JSON_FORMAT
+import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.SearchParams
 import tm.alashow.rickmorty.domain.entities.Character
-import tm.alashow.domain.models.DEFAULT_JSON_FORMAT
 
 object AppTypeConverters {
 
@@ -17,7 +17,7 @@ object AppTypeConverters {
 
     @TypeConverter
     @JvmStatic
-    fun fromCharacterParams(params: CharacterParams) = params.toString()
+    fun fromCharactersParams(params: CharactersParams) = params.toString()
 
     @TypeConverter
     @JvmStatic

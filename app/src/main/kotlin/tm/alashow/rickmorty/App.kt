@@ -7,9 +7,9 @@ package tm.alashow.rickmorty
 import android.content.Context
 import androidx.multidex.MultiDex
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 import tm.alashow.base.BaseApp
 import tm.alashow.base.inititializer.AppInitializers
-import javax.inject.Inject
 
 @HiltAndroidApp
 class App : BaseApp() {

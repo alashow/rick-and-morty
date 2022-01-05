@@ -12,8 +12,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.migration.DisableInstallInCheck
-import tm.alashow.data.db.DatabaseTxRunner
 import javax.inject.Singleton
+import tm.alashow.data.db.DatabaseTransactionRunner
+import tm.alashow.data.db.RoomTransactionRunner
+import tm.alashow.data.db.TestTransactionRunner
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -28,7 +30,7 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    fun databaseTransactionRunner(db: AppDatabase): DatabaseTxRunner = DatabaseTxRunner(db)
+    fun databaseTransactionRunner(db: AppDatabase): DatabaseTransactionRunner = RoomTransactionRunner(db)
 }
 
 @Module
@@ -41,4 +43,8 @@ object TestDatabaseModule {
             .allowMainThreadQueries()
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun databaseTransactionRunner(): DatabaseTransactionRunner = TestTransactionRunner()
 }

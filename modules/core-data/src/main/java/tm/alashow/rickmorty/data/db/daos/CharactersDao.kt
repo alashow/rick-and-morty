@@ -10,11 +10,11 @@ import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import tm.alashow.data.db.PaginatedEntryDao
-import tm.alashow.rickmorty.data.SearchParams
+import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.domain.entities.Character
 
 @Dao
-abstract class CharactersDao : PaginatedEntryDao<SearchParams, Character>() {
+abstract class CharactersDao : PaginatedEntryDao<CharactersParams, Character>() {
 
     @Transaction
     @Query("DELETE FROM characters WHERE name NOT IN (:names)")
@@ -25,11 +25,11 @@ abstract class CharactersDao : PaginatedEntryDao<SearchParams, Character>() {
     abstract override fun entries(): Flow<List<Character>>
 
     @Query("SELECT * FROM characters WHERE params = :params ORDER BY page ASC, search_index ASC")
-    abstract override fun entries(params: SearchParams): Flow<List<Character>>
+    abstract override fun entries(params: CharactersParams): Flow<List<Character>>
 
     @Transaction
     @Query("SELECT * FROM characters WHERE params = :params and page = :page ORDER BY page ASC, search_index ASC")
-    abstract override fun entries(params: SearchParams, page: Int): Flow<List<Character>>
+    abstract override fun entries(params: CharactersParams, page: Int): Flow<List<Character>>
 
     @Transaction
     @Query("SELECT * FROM characters ORDER BY page ASC, search_index ASC LIMIT :count OFFSET :offset")
@@ -41,7 +41,7 @@ abstract class CharactersDao : PaginatedEntryDao<SearchParams, Character>() {
 
     @Transaction
     @Query("SELECT * FROM characters WHERE params = :params ORDER BY page ASC, search_index ASC")
-    abstract override fun entriesPagingSource(params: SearchParams): PagingSource<Int, Character>
+    abstract override fun entriesPagingSource(params: CharactersParams): PagingSource<Int, Character>
 
     @Transaction
     @Query("SELECT * FROM characters WHERE id = :id")
@@ -59,10 +59,10 @@ abstract class CharactersDao : PaginatedEntryDao<SearchParams, Character>() {
     abstract override suspend fun delete(id: String): Int
 
     @Query("DELETE FROM characters WHERE params = :params")
-    abstract override suspend fun delete(params: SearchParams): Int
+    abstract override suspend fun delete(params: CharactersParams): Int
 
     @Query("DELETE FROM characters WHERE params = :params and page = :page")
-    abstract override suspend fun delete(params: SearchParams, page: Int): Int
+    abstract override suspend fun delete(params: CharactersParams, page: Int): Int
 
     @Query("DELETE FROM characters")
     abstract override suspend fun deleteAll(): Int
@@ -74,7 +74,7 @@ abstract class CharactersDao : PaginatedEntryDao<SearchParams, Character>() {
     abstract override fun observeCount(): Flow<Int>
 
     @Query("SELECT COUNT(*) from characters where params = :params")
-    abstract override suspend fun count(params: SearchParams): Int
+    abstract override suspend fun count(params: CharactersParams): Int
 
     @Query("SELECT COUNT(*) from characters where id = :id")
     abstract override fun has(id: String): Flow<Int>

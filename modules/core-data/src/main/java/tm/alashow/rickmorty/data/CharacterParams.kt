@@ -8,15 +8,8 @@ import tm.alashow.rickmorty.domain.entities.CharacterId
 
 data class CharacterParams(
     val id: CharacterId,
-    val page: Int = 0,
 ) {
 
-    // used in Room queries
+    // used as key in Room/Store
     override fun toString() = "id=$id"
-
-    companion object {
-        fun CharacterParams.toQueryMap(): Map<String, Any> = mutableMapOf<String, Any>(
-            "page" to page,
-        )
-    }
 }

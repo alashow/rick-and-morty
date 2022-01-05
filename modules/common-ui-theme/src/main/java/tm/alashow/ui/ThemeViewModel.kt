@@ -8,11 +8,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 import tm.alashow.base.ui.ThemeState
 import tm.alashow.data.PreferencesStore
 import tm.alashow.ui.theme.DefaultTheme
-import javax.inject.Inject
 
 object PreferenceKeys {
     const val THEME_STATE_KEY = "theme_state"

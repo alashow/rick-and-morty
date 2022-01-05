@@ -19,13 +19,12 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import tm.alashow.common.compose.LocalScaffoldState
 import tm.alashow.common.compose.rememberFlowWithLifecycle
-import tm.alashow.rickmorty.ui.home.Home
-import tm.alashow.rickmorty.ui.snackbar.SnackbarMessagesListener
 import tm.alashow.navigation.NavigatorHost
 import tm.alashow.navigation.rememberBottomSheetNavigator
+import tm.alashow.rickmorty.ui.home.Home
+import tm.alashow.rickmorty.ui.snackbar.SnackbarMessagesListener
 import tm.alashow.ui.ThemeViewModel
 import tm.alashow.ui.theme.AppTheme
-import tm.alashow.ui.theme.DefaultTheme
 import tm.alashow.ui.theme.DefaultThemeDark
 
 @OptIn(ExperimentalMaterialNavigationApi::class)

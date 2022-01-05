@@ -16,9 +16,9 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.google.accompanist.insets.ui.Scaffold
 import tm.alashow.common.compose.LocalScaffoldState
+import tm.alashow.navigation.screens.RootScreen
 import tm.alashow.rickmorty.ui.AppNavigation
 import tm.alashow.rickmorty.ui.currentScreenAsState
-import tm.alashow.navigation.screens.RootScreen
 import tm.alashow.ui.DismissableSnackbarHost
 
 val HomeBottomNavigationHeight = 56.dp

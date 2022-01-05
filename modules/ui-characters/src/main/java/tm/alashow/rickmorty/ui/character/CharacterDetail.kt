@@ -16,5 +16,4 @@ fun CharacterDetail() {
 private fun CharacterDetail(
     viewModel: CharacterDetailViewModel,
 ) {
-
 }

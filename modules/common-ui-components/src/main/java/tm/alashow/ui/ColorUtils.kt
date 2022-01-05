@@ -5,6 +5,7 @@
 package tm.alashow.ui
 
 import android.graphics.Bitmap
+import android.graphics.Color as AColor
 import androidx.annotation.ColorInt
 import androidx.annotation.FloatRange
 import androidx.compose.animation.animateColorAsState
@@ -22,15 +23,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
+import kotlin.math.*
+import kotlin.time.ExperimentalTime
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tm.alashow.base.imageloading.getBitmap
 import tm.alashow.ui.theme.contrastComposite
 import tm.alashow.ui.theme.toColor
-import kotlin.math.*
-import kotlin.time.ExperimentalTime
-import android.graphics.Color as AColor
 
 val ADAPTIVE_COLOR_ANIMATION: AnimationSpec<Color> = tween(easing = FastOutSlowInEasing)
 
