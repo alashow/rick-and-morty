@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2021, Alashov Berkeli
+  All rights reserved.
+  -->
+<resources>
+    <string name="app_name">Rick and Morty</string>
+    <string name="app_launcher">Rick and Morty</string>
+    <string name="app_label">Rick and Morty</string>
+
+    <string name="characters.title">Characters</string>
+</resources>

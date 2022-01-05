@@ -1,0 +1,9 @@
+<!--
+  Copyright (C) 2021, Alashov Berkeli
+  All rights reserved.
+  -->
+
+<resources>
+    <string name="app_launcher">[D] Rick and Morty</string>
+    <string name="app_name">[D] Rick and Morty</string>
+</resources>

@@ -1,0 +1,124 @@
+/*
+* Copyright (C) 2021, Alashov Berkeli
+* All rights reserved.
+*/
+
+import tm.alashow.buildSrc.App
+import tm.alashow.buildSrc.Deps
+
+plugins {
+	id "com.android.application"
+	id "dagger.hilt.android.plugin"
+	id "kotlin-android"
+	id "kotlin-kapt"
+	id "kotlin-parcelize"
+	id "org.jetbrains.kotlin.plugin.serialization"
+	id "androidx.navigation.safeargs.kotlin"
+}
+
+
+def gitSha = "git rev-parse --short HEAD".execute([], project.rootDir).text.trim()
+
+android {
+	compileSdkVersion App.compileSdkVersion
+
+	defaultConfig {
+		applicationId App.id
+		targetSdkVersion App.targetSdkVersion
+		minSdkVersion App.minSdkVersion
+		versionCode App.versionCode
+		versionName "${App.versionName}-${gitSha}"
+
+		multiDexEnabled true
+		vectorDrawables.useSupportLibrary = true
+	}
+
+	sourceSets {
+		main.java.srcDirs += "src/main/kotlin"
+		test.java.srcDirs += "src/test/kotlin"
+
+		main.res.srcDirs += "src/main/res-drawable"
+	}
+
+	compileOptions {
+		sourceCompatibility 1.8
+		targetCompatibility 1.8
+	}
+
+	lintOptions {
+		abortOnError false
+	}
+
+	buildFeatures {
+		compose = true
+	}
+
+	composeOptions {
+		kotlinCompilerExtensionVersion Deps.Android.Compose.compilerVersion
+	}
+
+	signingConfigs {
+		debug {
+			storeFile rootProject.file("signing/alashov-debug.jks")
+			storePassword "alashov"
+			keyPassword "alashov"
+			keyAlias "alashov"
+		}
+
+		release {
+			storeFile rootProject.file("signing/alashov-debug.jks")
+			storePassword "alashov"
+			keyPassword "alashov"
+			keyAlias "alashov"
+		}
+	}
+
+	buildTypes {
+		debug {
+			signingConfig signingConfigs.debug
+			versionNameSuffix "-DEBUG"
+			applicationIdSuffix ".debug"
+		}
+
+		release {
+			signingConfig signingConfigs.release
+			minifyEnabled true
+			shrinkResources true
+			proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+		}
+	}
+
+	kotlinOptions {
+		jvmTarget = "1.8"
+		useIR = true
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url "https://jitpack.io" }
+	maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local/" }
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
+dependencies {
+	implementation project(":modules:common-compose")
+	implementation project(":modules:common-ui-theme")
+	implementation project(":modules:common-ui-components")
+	implementation project(":modules:core-domain")
+	implementation project(":modules:ui-navigation")
+	implementation project(":modules:ui-characters")
+
+	implementation Deps.Kotlin.coroutinesAndroid
+	implementation Deps.Utils.proguardSnippets
+
+	kapt Deps.Android.Lifecycle.compiler
+
+	implementation Deps.Dagger.hilt
+	kapt Deps.Dagger.compiler
+	kapt Deps.Dagger.hiltCompiler
+
+	implementation Deps.Android.multiDex
+}
+
+apply plugin: "kotlinx-serialization"

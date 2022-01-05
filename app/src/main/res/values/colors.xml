@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright (C) 2021, Alashov Berkeli
+  All rights reserved.
+  -->
+<resources>
+    <color name="primary">#93cdc9</color>
+    <color name="secondary">#f9e234</color>
+</resources>

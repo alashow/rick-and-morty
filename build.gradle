@@ -1,0 +1,107 @@
+/*
+ * Copyright (C) 2021, Alashov Berkeli
+ * All rights reserved.
+ */
+
+import tm.alashow.buildSrc.Deps
+
+buildscript {
+    repositories {
+        google()
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath Deps.Android.gradle
+        classpath Deps.Kotlin.gradle
+        classpath Deps.Kotlin.serialization
+        classpath Deps.Android.navigationSafeArgs
+        classpath Deps.Dagger.hiltGradle
+    }
+}
+
+plugins {
+    id "com.diffplug.spotless" version "6.1.0"
+    id "com.github.ben-manes.versions" version "0.39.0"
+    id "com.kncept.junit.reporter" version "2.1.0"
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://androidx.dev/snapshots/builds/8020137/artifacts/repository' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://jitpack.io' }
+        jcenter()
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
+            freeCompilerArgs += "-Xopt-in=kotlin.Experimental"
+            freeCompilerArgs += "-Xopt-in=coil.annotation.ExperimentalCoilApi"
+            freeCompilerArgs += "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi"
+        }
+    }
+}
+
+subprojects {
+    configurations.configureEach {
+        exclude group: 'androidx.appcompat'
+        exclude group: 'com.google.android.material', module: 'material'
+    }
+
+    apply plugin: 'com.diffplug.spotless'
+    spotless {
+        kotlin {
+            licenseHeaderFile project.rootProject.file('spotless/copyright.kt')
+            target "**/*.kt"
+            ktlint("0.41.0").userData([
+                    'android'        : 'true',
+                    'max_line_length': '200',
+                    'disabled_rules' : 'no-wildcard-imports'
+            ])
+        }
+        format 'misc', {
+            target '**/*.gradle', '**/*.md', '**/.gitignore'
+            trimTrailingWhitespace()
+            indentWithTabs()
+        }
+    }
+
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            android {
+                testOptions {
+                    unitTests {
+                        includeAndroidResources = true
+                    }
+                }
+            }
+        }
+    }
+}
+
+Object prop(String propertyName, Object defaultValue) {
+    def propertyValue = project.properties[propertyName]
+    def envValue = System.getenv(propertyName)
+    return propertyValue != null ? propertyValue : (envValue != null ? envValue : defaultValue)
+}
+
+def getFile(String... fileNames) {
+    for (fileName in fileNames) {
+        File file = rootProject.file(fileName)
+        if (file.exists()) {
+            return file
+        }
+    }
+    return null
+}
+
+apply from: file('gradle/projectDependencyGraph.gradle')

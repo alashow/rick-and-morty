@@ -1,0 +1,20 @@
+/*
+ * Copyright (C) 2021, Alashov Berkeli
+ * All rights reserved.
+ */
+
+include ":modules:i18n"
+include ":modules:base"
+include ":modules:base-android"
+include ":modules:common-testing"
+include ":modules:common-domain"
+include ":modules:common-data"
+include ":modules:core-domain"
+include ":modules:core-data"
+include ":modules:core-characters"
+include ":modules:common-compose"
+include ":modules:common-ui-theme"
+include ":modules:common-ui-components"
+include ":modules:ui-navigation"
+include ":modules:ui-characters"
+include ":app"
