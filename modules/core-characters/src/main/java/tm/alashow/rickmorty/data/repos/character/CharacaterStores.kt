@@ -119,6 +119,12 @@ object CharacterStoresModule {
                     dao.updateOrInsert(
                         response.copy(
                             detailsFetched = true,
+                            primaryKey = params.toString()
+                        )
+                    )
+                    dao.update(
+                        response.copy(
+                            detailsFetched = true,
                         )
                     )
                 }
@@ -136,5 +142,5 @@ object CharacterStoresModule {
     @Provides
     @Singleton
     @Named("character_details")
-    fun characterDetailsLastRequests(preferences: PreferencesStore) = LastRequests("character_details", preferences)
+    fun characterDetailsLastRequests(preferences: PreferencesStore) = LastRequests("character_details", preferences, Duration.ofDays(7))
 }

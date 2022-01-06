@@ -17,6 +17,10 @@ import tm.alashow.rickmorty.domain.entities.Character
 abstract class CharactersDao : PaginatedEntryDao<CharactersParams, Character>() {
 
     @Transaction
+    @Query("SELECT * FROM characters WHERE url IN (:urls) GROUP BY url  ORDER BY page ASC, search_index ASC")
+    abstract fun getCharactersByUrls(urls: List<String>): Flow<List<Character>>
+
+    @Transaction
     @Query("DELETE FROM characters WHERE name NOT IN (:names)")
     abstract suspend fun deleteExcept(names: Set<String>): Int
 

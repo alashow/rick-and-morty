@@ -94,4 +94,13 @@ data class Character(
     val isDead get() = status.lowercase() == "dead"
 
     override fun getIdentifier() = id.toString()
+
+    fun isUnknown() = name.startsWith("$UNKNOWN_ITEM #")
+
+    companion object {
+        fun createUnknown(id: CharacterId) = Character(
+            id = id,
+            name = "$UNKNOWN_ITEM #$id",
+        )
+    }
 }

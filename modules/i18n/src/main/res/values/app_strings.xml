@@ -15,9 +15,12 @@
     <string name="character.status">Status</string>
     <string name="character.species">Species</string>
     <string name="character.type">Type</string>
-    <string name="character.location">Location</string>
+    <string name="character.origin">Origin location</string>
+    <string name="character.origin.residents">Origin location residents</string>
+    <string name="character.location">Last seen location</string>
     <string name="character.location.name">Name</string>
     <string name="character.location.type">Type</string>
     <string name="character.location.dimension">Dimension</string>
-    <string name="character.location.residents">Number of Residents</string>
+    <string name="character.location.numberOfResidents">Number of Residents</string>
+    <string name="character.location.residents">Last seen location residents</string>
 </resources>

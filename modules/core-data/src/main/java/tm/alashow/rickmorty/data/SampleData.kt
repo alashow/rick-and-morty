@@ -24,6 +24,7 @@ object SampleData {
         primaryKey = "sample-character-${random.id()}",
         searchIndex = random.nextInt(),
         page = random.nextInt(),
-        name = "Character ${random.id()}"
+        name = "Character ${random.id()}",
+        url = "https://rickandmortyapi.com/api/character/${random.id()}",
     )
 }

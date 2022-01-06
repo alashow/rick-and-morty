@@ -6,6 +6,7 @@ package tm.alashow.rickmorty.domain.entities
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
@@ -37,6 +38,10 @@ data class Location(
     @SerialName("residents")
     @ColumnInfo(name = "residents")
     val residents: List<String> = emptyList(),
+
+    @Ignore
+    @Transient
+    val residentsCharacters: List<Character> = emptyList(),
 
     @SerialName("url")
     @ColumnInfo(name = "url")

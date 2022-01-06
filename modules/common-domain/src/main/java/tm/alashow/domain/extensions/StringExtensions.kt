@@ -14,5 +14,9 @@ fun String?.orBlank() = when (this == null) {
     else -> ""
 }
 
+fun Int.blankIfZero() = toString().takeIf { it != "0" }.orBlank()
+
 fun List<String?>.interpunctize(interpunct: String = " ꞏ ") = filter { !it.isNullOrBlank() }
     .joinToString(interpunct)
+
+fun String?.capitalize() = orBlank().replaceFirstChar { it.uppercase() }

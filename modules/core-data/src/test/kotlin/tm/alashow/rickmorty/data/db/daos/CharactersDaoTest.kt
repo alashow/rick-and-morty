@@ -39,6 +39,17 @@ class CharactersDaoTest : BaseTest() {
     }
 
     @Test
+    fun getCharactersByUrls() = runTest {
+        val items = testItems.sortedWith(entriesComparator)
+        dao.insertAll(items)
+
+        dao.getCharactersByUrls(items.map { it.url }).test {
+            assertThat(awaitItem())
+                .isEqualTo(items)
+        }
+    }
+
+    @Test
     fun entries() = runTest {
         val items = testItems.sortedWith(entriesComparator)
         dao.insertAll(items)

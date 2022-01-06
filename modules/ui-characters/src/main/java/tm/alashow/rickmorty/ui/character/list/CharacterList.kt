@@ -35,7 +35,7 @@ import tm.alashow.common.compose.rememberFlowWithLifecycle
 import tm.alashow.navigation.LocalNavigator
 import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.rickmorty.domain.entities.Character
-import tm.alashow.rickmorty.ui.character.CharactersRow
+import tm.alashow.rickmorty.ui.character.CharacterRow
 import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.AppTopBar
 import tm.alashow.ui.components.ErrorBox
@@ -153,7 +153,7 @@ private fun LazyListScope.charactersList(
 ) {
     items(pagingCharacters, key = { _, c -> c.id }) { character ->
         val navigator = LocalNavigator.current
-        CharactersRow(
+        CharacterRow(
             character = character ?: Character(),
             isPlaceholder = character == null,
             onClick = {

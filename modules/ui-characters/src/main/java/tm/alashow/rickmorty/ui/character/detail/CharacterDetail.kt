@@ -6,6 +6,8 @@ package tm.alashow.rickmorty.ui.character.detail
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -25,10 +27,14 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import tm.alashow.common.compose.rememberFlowWithLifecycle
-import tm.alashow.domain.extensions.orBlank
+import tm.alashow.domain.extensions.blankIfZero
 import tm.alashow.navigation.LocalNavigator
 import tm.alashow.navigation.Navigator
+import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.rickmorty.domain.entities.Character
+import tm.alashow.rickmorty.domain.entities.CharacterId
+import tm.alashow.rickmorty.domain.entities.Location
+import tm.alashow.rickmorty.ui.character.CharacterColumn
 import tm.alashow.rickmorty.ui.character.CharacterStatusDot
 import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.*
@@ -102,79 +108,161 @@ private fun CharactersDetailContent(
         modifier = modifier.fillMaxHeight(),
         contentPadding = contentPadding,
     ) {
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = AppTheme.specs.padding,
-                        vertical = AppTheme.specs.paddingSmall,
-                    ),
-            ) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CoverImage(
-                        character.imageUrl,
-                        shape = CircleShape,
-                        size = 250.dp,
-                    )
-                }
-
-                Spacer(Modifier.height(AppTheme.specs.padding))
-
-                CharacterDetailRow(
-                    label = stringResource(R.string.character_status),
-                    value = character.status,
-                    separator = {
-                        CharacterStatusDot(character)
-                    }
+        item("header") {
+            CharacterDetailsHeader(character)
+        }
+        if (!character.location.isUnknown)
+            item("last_seen_location") {
+                CharacterLocationSection(
+                    label = stringResource(R.string.character_location),
+                    residentsLabel = stringResource(R.string.character_location_residents),
+                    currentCharacterId = character.id,
+                    location = character.location,
+                    isDetailsLoading = isDetailsLoading,
                 )
-                CharacterDetailRow(
-                    label = stringResource(R.string.character_species),
-                    value = character.species
-                )
-                CharacterDetailRow(
-                    label = stringResource(R.string.character_type),
-                    value = character.type
-                )
-
-                Text(
-                    stringResource(R.string.character_location),
-                    style = MaterialTheme.typography.h6,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(
-                        top = AppTheme.specs.padding,
-                        bottom = AppTheme.specs.paddingSmall
-                    )
-                )
-
-                with(character.location) {
-                    CharacterDetailRow(
-                        label = stringResource(R.string.character_location_name),
-                        value = name
-                    )
-                    CharacterDetailRow(
-                        label = stringResource(R.string.character_location_type),
-                        value = type,
-                        isDetailsLoading = isDetailsLoading,
-                    )
-                    CharacterDetailRow(
-                        label = stringResource(R.string.character_location_dimension),
-                        value = dimension,
-                        isDetailsLoading = isDetailsLoading,
-                    )
-                    CharacterDetailRow(
-                        label = stringResource(R.string.character_location_residents),
-                        value = residents.size.toString().takeIf { it != "0" }.orBlank(),
-                        isDetailsLoading = isDetailsLoading,
-                    )
-                }
             }
+        if (character.location != character.origin && !character.origin.isUnknown)
+            item("origin") {
+                CharacterLocationSection(
+                    label = stringResource(R.string.character_origin),
+                    residentsLabel = stringResource(R.string.character_origin_residents),
+                    currentCharacterId = character.id,
+                    location = character.origin,
+                    isDetailsLoading = isDetailsLoading,
+                )
+            }
+        item {
+            Spacer(Modifier.padding(AppTheme.specs.paddingLarge))
         }
     }
+}
+
+@Composable
+private fun CharacterDetailsHeader(character: Character) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = AppTheme.specs.padding,
+                vertical = AppTheme.specs.paddingSmall,
+            ),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = AppTheme.specs.padding),
+            contentAlignment = Alignment.Center
+        ) {
+            CoverImage(
+                character.imageUrl,
+                shape = CircleShape,
+                size = 250.dp,
+            )
+        }
+
+        CharacterDetailRow(
+            label = stringResource(R.string.character_status),
+            value = character.status,
+            separator = {
+                CharacterStatusDot(character)
+            }
+        )
+        CharacterDetailRow(
+            label = stringResource(R.string.character_species),
+            value = character.species
+        )
+        CharacterDetailRow(
+            label = stringResource(R.string.character_type),
+            value = character.type
+        )
+    }
+}
+
+@Composable
+private fun CharacterLocationSection(
+    label: String,
+    residentsLabel: String,
+    currentCharacterId: CharacterId,
+    location: Location,
+    isDetailsLoading: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier.padding(horizontal = AppTheme.specs.padding)) {
+        CharacterDetailLabel(label)
+        CharacterLocation(
+            location = location,
+            isDetailsLoading = isDetailsLoading
+        )
+    }
+    CharacterLocationResidents(
+        currentCharacterId = currentCharacterId,
+        location = location,
+        label = residentsLabel,
+    )
+}
+
+@Composable
+private fun CharacterLocation(
+    location: Location,
+    isDetailsLoading: Boolean
+) {
+    with(location) {
+        CharacterDetailRow(
+            label = stringResource(R.string.character_location_name),
+            value = name
+        )
+        CharacterDetailRow(
+            label = stringResource(R.string.character_location_type),
+            value = type,
+            isDetailsLoading = isDetailsLoading,
+        )
+        CharacterDetailRow(
+            label = stringResource(R.string.character_location_dimension),
+            value = dimension,
+            isDetailsLoading = isDetailsLoading,
+        )
+        CharacterDetailRow(
+            label = stringResource(R.string.character_location_numberOfResidents),
+            value = residents.size.blankIfZero(),
+            isDetailsLoading = isDetailsLoading,
+        )
+    }
+}
+
+@Composable
+private fun CharacterLocationResidents(
+    currentCharacterId: CharacterId,
+    location: Location,
+    label: String,
+    navigator: Navigator = LocalNavigator.current,
+) {
+    val residents = location.residentsCharacters.filterNot { it.id == currentCharacterId }
+    if (residents.isNotEmpty())
+        CharacterDetailLabel(
+            label = label,
+            Modifier.padding(start = AppTheme.specs.padding)
+        )
+    LazyRow(contentPadding = PaddingValues(horizontal = AppTheme.specs.paddingSmall)) {
+        items(residents, key = { it.id }) {
+            CharacterColumn(
+                character = it,
+                onClick = { navigator.navigate(LeafScreen.CharacterDetails.buildRoute(it.id)) },
+            )
+        }
+    }
+}
+
+@Composable
+private fun CharacterDetailLabel(label: String, modifier: Modifier = Modifier) {
+    Text(
+        text = label,
+        style = MaterialTheme.typography.h6,
+        fontWeight = FontWeight.Bold,
+        modifier = modifier.padding(
+            top = AppTheme.specs.padding,
+            bottom = AppTheme.specs.paddingSmall
+        )
+    )
 }
 
 @Composable

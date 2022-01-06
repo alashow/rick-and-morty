@@ -11,7 +11,7 @@ data class CharacterDetailViewState(
     val character: Character? = null,
     val characterDetails: Async<Character> = Uninitialized,
 ) {
-    val isLoaded = character != null
+    val isLoaded = (characterDetails() ?: character) != null
     val isDetailsLoading = characterDetails is Loading
 
     companion object {
