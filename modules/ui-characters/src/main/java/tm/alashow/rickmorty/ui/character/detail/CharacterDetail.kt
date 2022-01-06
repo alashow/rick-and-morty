@@ -4,7 +4,6 @@
  */
 package tm.alashow.rickmorty.ui.character.detail
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -21,19 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.ui.LocalScaffoldPadding
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import tm.alashow.common.compose.rememberFlowWithLifecycle
-import tm.alashow.domain.models.Fail
-import tm.alashow.domain.models.Success
+import tm.alashow.domain.extensions.orBlank
 import tm.alashow.navigation.LocalNavigator
 import tm.alashow.navigation.Navigator
 import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.ui.character.CharacterStatusDot
-import tm.alashow.rickmorty.ui.character.CharactersLoadingError
 import tm.alashow.rickmorty.ui.character.R
-import tm.alashow.ui.components.AppBarNavigationIcon
-import tm.alashow.ui.components.AppTopBar
-import tm.alashow.ui.components.CoverImage
-import tm.alashow.ui.components.FullScreenLoading
+import tm.alashow.ui.components.*
 import tm.alashow.ui.theme.AppTheme
 
 @Composable
@@ -57,22 +55,51 @@ private fun CharacterDetail(
             )
         },
     ) {
-        when (val details = viewState.characterDetails) {
-            is Success -> CharactersDetailContent(details())
-            is Fail -> CharactersLoadingError(details, onRetry = viewModel::refresh)
-            else -> FullScreenLoading()
+        CharacterDetailSwipeRefresh(
+            onRefresh = viewModel::refresh,
+        ) {
+            if (viewState.isLoaded) {
+                val character = viewState.characterDetails() ?: viewState.character
+                if (character != null)
+                    CharactersDetailContent(
+                        character = character,
+                        isDetailsLoading = viewState.isDetailsLoading
+                    )
+            } else FullScreenLoading()
         }
     }
+}
+
+@Composable
+private fun CharacterDetailSwipeRefresh(
+    onRefresh: () -> Unit,
+    isRefreshing: Boolean = false,
+    content: @Composable () -> Unit,
+) {
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = onRefresh,
+        indicatorPadding = LocalScaffoldPadding.current,
+        indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state,
+                refreshTriggerDistance = trigger,
+                scale = true
+            )
+        },
+        content = content,
+    )
 }
 
 @Composable
 private fun CharactersDetailContent(
     character: Character,
     modifier: Modifier = Modifier,
+    isDetailsLoading: Boolean = false,
     contentPadding: PaddingValues = LocalScaffoldPadding.current,
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.fillMaxHeight(),
         contentPadding = contentPadding,
     ) {
         item {
@@ -131,15 +158,18 @@ private fun CharactersDetailContent(
                     )
                     CharacterDetailRow(
                         label = stringResource(R.string.character_location_type),
-                        value = type
+                        value = type,
+                        isDetailsLoading = isDetailsLoading,
                     )
                     CharacterDetailRow(
                         label = stringResource(R.string.character_location_dimension),
-                        value = dimension
+                        value = dimension,
+                        isDetailsLoading = isDetailsLoading,
                     )
                     CharacterDetailRow(
                         label = stringResource(R.string.character_location_residents),
-                        value = residents.size.toString()
+                        value = residents.size.toString().takeIf { it != "0" }.orBlank(),
+                        isDetailsLoading = isDetailsLoading,
                     )
                 }
             }
@@ -152,26 +182,33 @@ private fun CharacterDetailRow(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
+    isDetailsLoading: Boolean = false,
     separator: @Composable RowScope.() -> Unit = {},
     labelStyle: TextStyle = MaterialTheme.typography.body1,
     valueStyle: TextStyle = MaterialTheme.typography.body1,
 ) {
     val hasValue = value.isNotBlank()
-    AnimatedVisibility(visible = hasValue) {
+    val loadingModifier = Modifier.placeholder(
+        visible = !hasValue && isDetailsLoading,
+        highlight = shimmer(),
+    )
+    if (hasValue || isDetailsLoading)
         Row(
             horizontalArrangement = Arrangement.spacedBy(AppTheme.specs.paddingSmall),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier.padding(vertical = AppTheme.specs.paddingTiny)
+            modifier = modifier
+                .padding(vertical = AppTheme.specs.paddingTiny)
+                .then(loadingModifier)
         ) {
             Text(
-                "$label:", style = labelStyle,
+                text = "$label:",
+                style = labelStyle,
                 fontWeight = FontWeight.Bold
             )
             separator()
             Text(
-                value.replaceFirstChar { it.uppercase() },
+                text = value.replaceFirstChar { it.uppercase() },
                 style = valueStyle
             )
         }
-    }
 }

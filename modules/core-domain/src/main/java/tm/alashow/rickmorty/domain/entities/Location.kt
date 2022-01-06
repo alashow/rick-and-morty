@@ -24,7 +24,7 @@ data class Location(
 
     @SerialName("name")
     @ColumnInfo(name = "name")
-    val name: String = tm.alashow.rickmorty.domain.entities.UNKNOWN_ITEM,
+    val name: String = UNKNOWN_ITEM,
 
     @SerialName("type")
     @ColumnInfo(name = "type")

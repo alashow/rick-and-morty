@@ -118,8 +118,6 @@ object CharacterStoresModule {
                 txRunner {
                     dao.updateOrInsert(
                         response.copy(
-                            params = params.toString(),
-                            primaryKey = params.toString(),
                             detailsFetched = true,
                         )
                     )
@@ -138,5 +136,5 @@ object CharacterStoresModule {
     @Provides
     @Singleton
     @Named("character_details")
-    fun characterDetailsLastRequests(preferences: PreferencesStore) = LastRequests("artist_details", preferences)
+    fun characterDetailsLastRequests(preferences: PreferencesStore) = LastRequests("character_details", preferences)
 }
