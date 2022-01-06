@@ -1,13 +1,13 @@
 name: Android CI
-on: [push]
+on: [push, pull_request]
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  run-tests:
-    name: Run Tests
+  build:
+    name: Run Tests & Build apk
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +29,7 @@ jobs:
           arguments: |
             spotlessCheck
             testDebug
+            assembleRelease
 
       - name: Copy build reports
         if: always()
@@ -53,3 +54,10 @@ jobs:
         with:
           name: junit-results
           path: junit
+
+      - name: Upload app-release
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
