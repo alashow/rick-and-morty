@@ -2,7 +2,7 @@
  * Copyright (C) 2018, Alashov Berkeli
  * All rights reserved.
  */
-package tm.alashow.base.util.extensions
+package tm.alashow.domain.extensions
 
 import java.util.*
 import kotlin.math.max

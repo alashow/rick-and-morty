@@ -20,7 +20,8 @@ import tm.alashow.navigation.Navigator
 import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.navigation.screens.RootScreen
 import tm.alashow.navigation.screens.composableScreen
-import tm.alashow.rickmorty.ui.character.CharacterDetail
+import tm.alashow.rickmorty.ui.character.detail.CharacterDetail
+import tm.alashow.rickmorty.ui.character.list.Characters
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
@@ -60,7 +61,7 @@ private fun NavGraphBuilder.addCharactersRoot(navController: NavController) {
 
 private fun NavGraphBuilder.addCharacters(navController: NavController) {
     composableScreen(LeafScreen.Characters()) {
-        CharacterDetail()
+        Characters()
     }
 }
 

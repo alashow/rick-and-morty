@@ -2,15 +2,15 @@
  * Copyright (C) 2021, Alashov Berkeli
  * All rights reserved.
  */
-package tm.alashow.rickmorty.ui.character
+package tm.alashow.rickmorty.ui.character.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.combine
+import tm.alashow.base.util.extensions.stateInDefault
 import tm.alashow.navigation.screens.CHARACTER_ID_KEY
 import tm.alashow.rickmorty.data.interactors.character.GetCharacterDetails
 import tm.alashow.rickmorty.data.observers.character.ObserveCharacter
@@ -23,20 +23,13 @@ class CharacterDetailViewModel @Inject constructor(
     private val characterDetails: ObserveCharacterDetails
 ) : ViewModel() {
 
-    private val characterParams = handle.get<Long>(CHARACTER_ID_KEY) ?: 1 // TODO: require default id
+    private val characterParams = handle.get<Long>(CHARACTER_ID_KEY) ?: -1
 
-    val characterDetailsState = characterDetails.asyncFlow
+    val state = combine(character.flow, characterDetails.asyncFlow, ::CharacterDetailViewState)
+        .stateInDefault(viewModelScope, CharacterDetailViewState.EMPTY)
 
     init {
         load()
-        // TODO: remove this
-        viewModelScope.launch {
-            (1L..826L).forEach { id ->
-                character(id)
-                characterDetails(GetCharacterDetails.Params(id))
-                delay(5000)
-            }
-        }
     }
 
     private fun load(forceRefresh: Boolean = false) {

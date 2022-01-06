@@ -80,6 +80,9 @@ object CharacterStoresModule {
             },
             writer = { params, response ->
                 txRunner {
+                    // requesting the first page means we're refreshing the whole table
+                    if (params.page == 0)
+                        dao.deleteAll()
                     val entries = response.mapIndexed { index, it ->
                         it.copy(
                             params = params.toString(),
@@ -91,7 +94,7 @@ object CharacterStoresModule {
                     dao.update(params, params.page, entries)
                 }
             },
-            delete = dao::delete,
+            delete = { dao.delete(params = it, page = it.page) },
             deleteAll = dao::deleteAll
         )
     ).build()
@@ -113,11 +116,17 @@ object CharacterStoresModule {
             },
             writer = { params, response ->
                 txRunner {
-                    dao.updateOrInsert(response.copy(params = params.toString()))
+                    dao.updateOrInsert(
+                        response.copy(
+                            params = params.toString(),
+                            primaryKey = params.toString(),
+                            detailsFetched = true,
+                        )
+                    )
                 }
             },
             delete = { dao.delete(it.toString()) },
-            deleteAll = { dao.deleteAll() },
+            deleteAll = dao::deleteAll,
         )
     ).build()
 

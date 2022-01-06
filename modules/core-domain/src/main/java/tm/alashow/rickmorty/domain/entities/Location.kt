@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import tm.alashow.domain.models.BasePaginatedEntity
+import tm.alashow.rickmorty.domain.isUnknown
 
 typealias LocationId = Long
 
@@ -23,7 +24,7 @@ data class Location(
 
     @SerialName("name")
     @ColumnInfo(name = "name")
-    val name: String = UNKNOWN,
+    val name: String = tm.alashow.rickmorty.domain.entities.UNKNOWN_ITEM,
 
     @SerialName("type")
     @ColumnInfo(name = "type")
@@ -59,5 +60,5 @@ data class Location(
 
     override fun getIdentifier() = id.toString()
 
-    val isUnknown get() = name.isBlank() || name.lowercase() == "unknown"
+    val isUnknown get() = name.isBlank() || name.isUnknown()
 }

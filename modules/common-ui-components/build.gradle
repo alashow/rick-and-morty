@@ -39,6 +39,7 @@ repositories {
 }
 
 dependencies {
+	implementation project(":modules:common-domain")
 	api project(":modules:common-compose")
 	api project(":modules:common-ui-theme")
 }

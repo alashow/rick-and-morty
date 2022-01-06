@@ -44,7 +44,7 @@ abstract class CharactersDao : PaginatedEntryDao<CharactersParams, Character>() 
     abstract override fun entriesPagingSource(params: CharactersParams): PagingSource<Int, Character>
 
     @Transaction
-    @Query("SELECT * FROM characters WHERE id = :id")
+    @Query("SELECT * FROM characters WHERE id = :id ORDER BY details_fetched DESC")
     abstract override fun entry(id: String): Flow<Character>
 
     @Transaction
@@ -52,7 +52,7 @@ abstract class CharactersDao : PaginatedEntryDao<CharactersParams, Character>() 
     abstract override fun entriesById(ids: List<String>): Flow<List<Character>>
 
     @Transaction
-    @Query("SELECT * FROM characters WHERE id = :id")
+    @Query("SELECT * FROM characters WHERE id = :id ORDER BY details_fetched DESC")
     abstract override fun entryNullable(id: String): Flow<Character?>
 
     @Query("DELETE FROM characters WHERE id = :id")

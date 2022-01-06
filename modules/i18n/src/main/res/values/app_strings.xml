@@ -10,6 +10,7 @@
 
     <string name="characters.title">Characters</string>
 
+    <string name="character.title">Character</string>
     <string name="character.name">Name</string>
     <string name="character.status">Status</string>
     <string name="character.species">Species</string>

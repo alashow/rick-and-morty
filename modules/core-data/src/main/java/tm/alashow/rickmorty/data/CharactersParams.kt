@@ -28,7 +28,7 @@ data class CharactersParams(
             "species" to (species ?: ""),
             "type" to (type ?: ""),
             "gender" to (gender ?: ""),
-            "page" to page,
+            "page" to page + 1,
         )
     }
 }

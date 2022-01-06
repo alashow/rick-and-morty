@@ -71,7 +71,7 @@ sealed class LeafScreen(
         route, root,
         arguments = listOf(
             navArgument(CHARACTER_ID_KEY) {
-                type = NavType.StringType
+                type = NavType.LongType
             }
         ),
         deepLinks = listOf(

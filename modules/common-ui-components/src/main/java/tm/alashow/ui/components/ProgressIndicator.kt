@@ -6,6 +6,7 @@ package tm.alashow.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.CircularProgressIndicator
@@ -19,7 +20,8 @@ import androidx.compose.ui.unit.dp
 import tm.alashow.ui.Delayed
 
 object ProgressIndicatorDefaults {
-    val sizeMedium = 32.dp to 2.dp
+    val sizeLarge = 32.dp to 2.dp
+    val sizeMedium = 24.dp to 1.5.dp
     val sizeSmall = 16.dp to 1.dp
     val size = 48.dp to 4.dp
 }
@@ -29,8 +31,12 @@ fun ProgressIndicatorSmall(modifier: Modifier = Modifier) =
     ProgressIndicator(modifier, ProgressIndicatorDefaults.sizeSmall.first, ProgressIndicatorDefaults.sizeSmall.second)
 
 @Composable
-fun ProgressIndicator(modifier: Modifier = Modifier) =
+fun ProgressIndicatorMedium(modifier: Modifier = Modifier) =
     ProgressIndicator(modifier, ProgressIndicatorDefaults.sizeMedium.first, ProgressIndicatorDefaults.sizeMedium.second)
+
+@Composable
+fun ProgressIndicator(modifier: Modifier = Modifier) =
+    ProgressIndicator(modifier, ProgressIndicatorDefaults.sizeLarge.first, ProgressIndicatorDefaults.sizeLarge.second)
 
 @Composable
 fun ProgressIndicator(
@@ -59,8 +65,13 @@ fun FullScreenLoading(modifier: Modifier = Modifier, delayMillis: Long = FULL_SC
     }
 }
 
-fun LazyListScope.fullScreenLoading(delayMillis: Long = 100) {
+fun LazyListScope.fullScreenLoading(delayMillis: Long = 100, modifier: Modifier = Modifier) {
     item {
-        FullScreenLoading(delayMillis = delayMillis, modifier = Modifier.fillParentMaxHeight())
+        FullScreenLoading(
+            delayMillis = delayMillis,
+            modifier = modifier
+                .fillParentMaxHeight()
+                .fillMaxWidth()
+        )
     }
 }

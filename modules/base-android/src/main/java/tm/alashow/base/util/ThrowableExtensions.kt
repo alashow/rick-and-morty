@@ -8,7 +8,7 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import retrofit2.HttpException
 import tm.alashow.base.R
-import tm.alashow.base.util.extensions.simpleName
+import tm.alashow.domain.extensions.simpleName
 import tm.alashow.i18n.UiMessage
 import tm.alashow.i18n.UiMessageConvertable
 import tm.alashow.rickmorty.domain.models.errors.ApiErrorException
