@@ -28,8 +28,8 @@ fun Int.toColor() = Color(this)
 
 val Primary = Color(0xFF103f46)
 val PrimaryVariant = Color(0xFF25325d)
-val Secondary = Color(0xFF93cdc9)
-val SecondaryVariant = Color(0xFFf5b79b)
+val Secondary = Color(0xFFf5b79b)
+val SecondaryVariant = Color(0xFF93cdc9)
 
 val WhiteTransparent = Color(0x80FFFFFF)
 
@@ -81,8 +81,8 @@ fun appLightColors(
     secondary: Color,
     primaryVariant: Color = primary,
     secondaryVariant: Color = secondary,
-    background: Color = secondary,
-    surface: Color = secondary,
+    background: Color = secondaryVariant,
+    surface: Color = secondaryVariant,
     onBackground: Color = Color.Black,
     onPrimary: Color = Color.Black,
     onSecondary: Color = Color.Black,
