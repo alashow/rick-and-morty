@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -39,14 +41,12 @@ fun CharacterRow(
             .fillMaxWidth()
             .height(rowHeight)
             .padding(
-                horizontal = AppTheme.specs.paddingSmall,
-                vertical = AppTheme.specs.paddingSmall,
+                vertical = AppTheme.specs.paddingTiny,
+                horizontal = AppTheme.specs.paddingSmall
             ),
         elevation = elevation,
     ) {
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(AppTheme.specs.padding)
-        ) {
+        Row {
             CoverImage(
                 data = character.imageUrl,
                 imageModifier = loadingModifier,
@@ -55,11 +55,12 @@ fun CharacterRow(
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(AppTheme.specs.paddingSmall),
-                modifier = Modifier.padding(vertical = AppTheme.specs.padding)
+                modifier = Modifier.padding(AppTheme.specs.padding)
             ) {
                 Text(
                     text = character.name,
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.Bold,
                     modifier = loadingModifier,
                 )
                 Row(
@@ -69,8 +70,9 @@ fun CharacterRow(
                     CharacterStatusDot(character, loadingModifier)
                     Text(
                         text = character.description,
-                        maxLines = 3,
-                        style = MaterialTheme.typography.body1,
+                        maxLines = 2,
+                        overflow = TextOverflow.Visible,
+                        style = MaterialTheme.typography.body2,
                         modifier = loadingModifier,
                     )
                 }
