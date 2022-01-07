@@ -40,13 +40,13 @@ data class Character(
     @ColumnInfo(name = "species")
     val species: String = UNKNOWN_ITEM,
 
-    @SerialName("gender")
-    @ColumnInfo(name = "gender")
-    val gender: String = UNKNOWN_ITEM,
-
     @SerialName("type")
     @ColumnInfo(name = "type")
     val type: String = "",
+
+    @SerialName("gender")
+    @ColumnInfo(name = "gender")
+    val gender: String = UNKNOWN_ITEM,
 
     @SerialName("image")
     @ColumnInfo(name = "image")

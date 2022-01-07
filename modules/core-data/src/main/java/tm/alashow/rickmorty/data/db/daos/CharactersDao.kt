@@ -17,6 +17,28 @@ import tm.alashow.rickmorty.domain.entities.Character
 abstract class CharactersDao : PaginatedEntryDao<CharactersParams, Character>() {
 
     @Transaction
+    @Query(
+        """SELECT * FROM characters 
+        WHERE (status LIKE (:status) 
+                AND species LIKE (:species)
+                AND type LIKE (:type)
+                AND gender LIKE (:gender)
+                AND origin LIKE (:origin)
+                AND location LIKE (:location))
+        AND params = :params
+        ORDER BY page ASC, search_index ASC"""
+    )
+    abstract fun entriesPagingSourceWithFilters(
+        status: String,
+        species: String,
+        type: String,
+        gender: String,
+        origin: String,
+        location: String,
+        params: CharactersParams
+    ): PagingSource<Int, Character>
+
+    @Transaction
     @Query("SELECT * FROM characters WHERE url IN (:urls) GROUP BY url  ORDER BY page ASC, search_index ASC")
     abstract fun getCharactersByUrls(urls: List<String>): Flow<List<Character>>
 

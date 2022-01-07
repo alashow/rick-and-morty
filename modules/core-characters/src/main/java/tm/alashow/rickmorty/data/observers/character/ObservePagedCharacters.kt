@@ -15,12 +15,14 @@ import tm.alashow.data.PagingInteractor
 import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.db.daos.CharactersDao
 import tm.alashow.rickmorty.data.interactors.character.GetCharacters
+import tm.alashow.rickmorty.data.interactors.character.GetCharactersPagingSourceWithFilters
 import tm.alashow.rickmorty.domain.entities.Character
 
 @OptIn(ExperimentalPagingApi::class)
 class ObservePagedCharacters @Inject constructor(
     private val getCharacters: GetCharacters,
-    private val dao: CharactersDao
+    private val dao: CharactersDao,
+    private val getCharactersPagingSourceWithFilters: GetCharactersPagingSourceWithFilters,
 ) : PagingInteractor<ObservePagedCharacters.Params, Character>() {
 
     override fun createObservable(
@@ -41,7 +43,7 @@ class ObservePagedCharacters @Inject constructor(
                     throw error
                 }
             },
-            pagingSourceFactory = { dao.entriesPagingSource(params.charactersParams) }
+            pagingSourceFactory = { getCharactersPagingSourceWithFilters(params.charactersParams) }
         ).flow
     }
 
