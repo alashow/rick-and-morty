@@ -40,6 +40,7 @@ import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.ui.character.components.CharacterRow
 import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.AppTopBar
+import tm.alashow.ui.components.EmptyErrorBox
 import tm.alashow.ui.components.ErrorBox
 import tm.alashow.ui.components.FullScreenLoading
 import tm.alashow.ui.isInitialLoading
@@ -137,16 +138,22 @@ private fun CharactersListError(
     pagingCharacters: LazyPagingItems<Character>,
     modifier: Modifier = Modifier
 ) {
-    val isEmptyAndHasError = pagingCharacters.itemCount == 0 && pagingCharacters.loadState.refresh is LoadState.Error
-    val error = (pagingCharacters.loadState.refresh as? LoadState.Error)?.error
-    if (isEmptyAndHasError)
+    val boxModifier = modifier
+        .fillMaxSize()
+        .padding(horizontal = AppTheme.specs.padding)
+    val isEmpty = pagingCharacters.itemCount == 0
+    val hasError = pagingCharacters.loadState.refresh is LoadState.Error
+    if (isEmpty && hasError) {
+        val error = (pagingCharacters.loadState.refresh as? LoadState.Error)?.error
         ErrorBox(
             message = error.toUiMessage().asString(LocalContext.current),
             onRetryClick = pagingCharacters::retry,
-            modifier = modifier
-                .fillMaxSize()
-                .padding(horizontal = AppTheme.specs.padding),
+            modifier = boxModifier,
         )
+    } else if (isEmpty) EmptyErrorBox(
+        boxModifier,
+        retryVisible = false
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)

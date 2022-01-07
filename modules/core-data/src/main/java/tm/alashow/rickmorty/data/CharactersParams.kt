@@ -36,7 +36,7 @@ data class CharactersParams(
 
     @Serializable
     data class Filters(
-        val status: String? = null,
+        val status: String? = "sdsdsd",
         val species: String? = null,
         val type: String? = null,
         val gender: String? = null,
