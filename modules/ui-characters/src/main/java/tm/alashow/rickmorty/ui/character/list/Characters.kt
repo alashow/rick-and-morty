@@ -5,7 +5,9 @@
 package tm.alashow.rickmorty.ui.character.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -35,7 +37,7 @@ import tm.alashow.common.compose.rememberFlowWithLifecycle
 import tm.alashow.navigation.LocalNavigator
 import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.rickmorty.domain.entities.Character
-import tm.alashow.rickmorty.ui.character.CharacterRow
+import tm.alashow.rickmorty.ui.character.components.CharacterRow
 import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.AppTopBar
 import tm.alashow.ui.components.ErrorBox
@@ -164,4 +166,5 @@ private fun LazyListScope.charactersList(
         )
     }
     loadingMoreRow(pagingCharacters)
+    item { Spacer(Modifier.height(AppTheme.specs.padding)) }
 }

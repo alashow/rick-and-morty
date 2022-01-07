@@ -34,8 +34,8 @@ import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.domain.entities.CharacterId
 import tm.alashow.rickmorty.domain.entities.Location
-import tm.alashow.rickmorty.ui.character.CharacterColumn
-import tm.alashow.rickmorty.ui.character.CharacterStatusDot
+import tm.alashow.rickmorty.ui.character.components.CharacterColumn
+import tm.alashow.rickmorty.ui.character.components.CharacterStatusDot
 import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.*
 import tm.alashow.ui.theme.AppTheme
