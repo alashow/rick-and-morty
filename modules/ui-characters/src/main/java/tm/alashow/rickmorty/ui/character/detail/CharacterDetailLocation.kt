@@ -1,5 +1,6 @@
 package tm.alashow.rickmorty.ui.character.detail
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -38,6 +39,7 @@ internal fun CharacterLocationSection(
         currentCharacterId = currentCharacterId,
         location = location,
         label = residentsLabel,
+        isDetailsLoading = isDetailsLoading,
     )
 }
 
@@ -74,20 +76,28 @@ internal fun CharacterLocationResidents(
     currentCharacterId: CharacterId,
     location: Location,
     label: String,
+    isDetailsLoading: Boolean,
+    modifier: Modifier = Modifier,
     navigator: Navigator = LocalNavigator.current,
 ) {
     val residents = location.residentsCharacters.filterNot { it.id == currentCharacterId }
     if (residents.isNotEmpty())
         CharacterDetailLabel(
             label = label,
-            Modifier.padding(start = AppTheme.specs.padding)
+            modifier = modifier.padding(start = AppTheme.specs.padding),
         )
-    LazyRow(contentPadding = PaddingValues(horizontal = AppTheme.specs.paddingSmall)) {
-        items(residents, key = { it.id }) {
-            CharacterColumn(
-                character = it,
-                onClick = { navigator.navigate(LeafScreen.CharacterDetails.buildRoute(it.id)) },
-            )
+    AnimatedVisibility(
+        visible = !isDetailsLoading,
+        enter = slideInHorizontally() + fadeIn(),
+        exit = slideOutHorizontally() + fadeOut()
+    ) {
+        LazyRow(contentPadding = PaddingValues(horizontal = AppTheme.specs.paddingSmall)) {
+            items(residents, key = { it.id }) {
+                CharacterColumn(
+                    character = it,
+                    onClick = { navigator.navigate(LeafScreen.CharacterDetails.buildRoute(it.id)) },
+                )
+            }
         }
     }
 }

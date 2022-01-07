@@ -4,7 +4,6 @@
  */
 package tm.alashow.rickmorty.data.repos.character
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import tm.alashow.base.util.CoroutineDispatchers
 import tm.alashow.data.resultApiCall
@@ -12,6 +11,7 @@ import tm.alashow.rickmorty.data.api.RickAndMortyEndpoints
 import tm.alashow.rickmorty.data.db.daos.CharactersDao
 import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.domain.entities.CharacterId
+import javax.inject.Inject
 
 class CharacterDetailDataSource @Inject constructor(
     private val dao: CharactersDao,
@@ -22,7 +22,6 @@ class CharacterDetailDataSource @Inject constructor(
         return resultApiCall(dispatchers.network) {
             // get it from database or fallback to network
             val result = dao.entryNullable(params.toString()).first() ?: endpoints.character(params)
-
             val locationDetails = when (result.location.isUnknown) {
                 true -> result.location
                 else -> endpoints.locationByUrl(result.location.url)
