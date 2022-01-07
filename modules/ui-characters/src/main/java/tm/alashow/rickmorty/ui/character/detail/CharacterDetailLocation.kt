@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2022, Alashov Berkeli
+ * All rights reserved.
+ */
 package tm.alashow.rickmorty.ui.character.detail
 
 import androidx.compose.animation.*
@@ -101,4 +105,3 @@ internal fun CharacterLocationResidents(
         }
     }
 }
-

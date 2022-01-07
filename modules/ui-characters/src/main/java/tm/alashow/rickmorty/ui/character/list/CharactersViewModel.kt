@@ -9,9 +9,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import tm.alashow.base.ui.SnackbarManager
+import tm.alashow.base.util.extensions.getStateFlow
 import tm.alashow.base.util.extensions.stateInDefault
 import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.observers.character.ObserveCharactersFilterOptions
@@ -19,15 +22,15 @@ import tm.alashow.rickmorty.data.observers.character.ObservePagedCharacters
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val handle: SavedStateHandle,
-    private val observeCharactersFilterOptions: ObserveCharactersFilterOptions,
+    handle: SavedStateHandle,
+    observeCharactersFilterOptions: ObserveCharactersFilterOptions,
     private val observePagedCharacters: ObservePagedCharacters,
     private val snackbarManager: SnackbarManager,
 ) : ViewModel() {
 
     private val defaultParams = CharactersParams()
     private val characterParamsState = MutableStateFlow(defaultParams)
-    private val charactersFiltersState = MutableStateFlow(defaultParams.filters)
+    private val charactersFiltersState = handle.getStateFlow("filters", viewModelScope, defaultParams.filters)
 
     val charactersPager = observePagedCharacters.flow
 

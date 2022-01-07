@@ -20,7 +20,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
 
-      - name: Run Tests
+      - name: Run Tests & Build apk
         uses: burrunan/gradle-cache-action@v1
         with:
           gradle-dependencies-cache-key: |

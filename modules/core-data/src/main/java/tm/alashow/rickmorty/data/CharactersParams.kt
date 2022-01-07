@@ -4,6 +4,8 @@
  */
 package tm.alashow.rickmorty.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,6 +36,7 @@ data class CharactersParams(
     )
 
     @Serializable
+    @Parcelize
     data class Filters(
         val status: String? = null,
         val species: String? = null,
@@ -41,7 +44,7 @@ data class CharactersParams(
         val gender: String? = null,
         val origin: String? = null,
         val location: String? = null,
-    ) {
+    ) : Parcelable {
         val hasFilters = status != null || species != null || type != null || gender != null || origin != null || location != null
     }
 
