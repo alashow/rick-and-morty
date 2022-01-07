@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2022, Alashov Berkeli
+ * All rights reserved.
+ */
 package tm.alashow.rickmorty.ui.character.components
 
 import androidx.compose.foundation.layout.*
@@ -72,7 +76,7 @@ fun CharacterColumn(
                         horizontalArrangement = Arrangement.spacedBy(AppTheme.specs.paddingSmall),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        CharacterStatusDot(character, loadingModifier)
+                        CharacterStatusDot(character = character, modifier = loadingModifier)
                         Text(
                             text = character.status.capitalize(),
                             modifier = loadingModifier,

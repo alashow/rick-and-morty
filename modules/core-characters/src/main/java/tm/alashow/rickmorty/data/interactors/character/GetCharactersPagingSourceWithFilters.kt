@@ -5,10 +5,10 @@
 package tm.alashow.rickmorty.data.interactors.character
 
 import androidx.paging.PagingSource
+import javax.inject.Inject
 import tm.alashow.rickmorty.data.CharactersParams
 import tm.alashow.rickmorty.data.db.daos.CharactersDao
 import tm.alashow.rickmorty.domain.entities.Character
-import javax.inject.Inject
 
 class GetCharactersPagingSourceWithFilters @Inject constructor(
     private val dao: CharactersDao,

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright (C) 2021, Alashov Berkeli
   All rights reserved.
   -->
@@ -9,6 +8,15 @@
     <string name="app_label">Rick and Morty</string>
 
     <string name="characters.title">Characters</string>
+
+    <string name="characters.filters">Filters</string>
+    <string name="characters.filters.status">Status</string>
+    <string name="characters.filters.species">Species</string>
+    <string name="characters.filters.type">Type</string>
+    <string name="characters.filters.gender">Gender</string>
+    <string name="characters.filters.origin">Origin</string>
+    <string name="characters.filters.location">Last seen location</string>
+    <string name="characters.filters.emptyOption">None</string>
 
     <string name="character.title">Character</string>
     <string name="character.name">Name</string>

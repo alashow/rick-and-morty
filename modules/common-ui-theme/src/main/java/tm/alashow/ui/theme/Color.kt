@@ -28,7 +28,7 @@ fun Int.toColor() = Color(this)
 
 val Primary = Color(0xFF103f46)
 val PrimaryVariant = Color(0xFF25325d)
-val Secondary = Color(0xFFf5b79b)
+val Secondary = Color(0xFFf3666a)
 val SecondaryVariant = Color(0xFF93cdc9)
 
 val WhiteTransparent = Color(0x80FFFFFF)

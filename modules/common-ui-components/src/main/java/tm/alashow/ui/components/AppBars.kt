@@ -60,6 +60,7 @@ fun AppTopBar(
     collapsedProgress: Float = 1f,
     titleModifier: Modifier = Modifier,
     navigationIcon: @Composable (() -> Unit)? = null,
+    isSmallTitleStyle: Boolean = navigationIcon != null,
     filterVisible: Boolean = false,
     filterContent: @Composable RowScope.() -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
@@ -67,14 +68,14 @@ fun AppTopBar(
     val appBarColor = translucentSurfaceColor()
     val backgroundColor = appBarColor.copy(alpha = collapsedProgress.coerceAtMost(AppBarAlphas.translucentBarAlpha()))
     val contentColor = contentColorFor(backgroundColor)
-    val titleStyle = if (navigationIcon != null) topAppBarTitleStyleSmall() else topAppBarTitleStyle()
+    val titleStyle = if (isSmallTitleStyle) topAppBarTitleStyleSmall() else topAppBarTitleStyle()
     CompositionLocalProvider(LocalContentColor provides contentColor) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .background(backgroundColor)
                 .statusBarsPadding()
-                .padding(vertical = if (filterVisible || navigationIcon != null) 4.dp else AppTheme.specs.padding)
+                .padding(vertical = if (filterVisible || isSmallTitleStyle) 4.dp else AppTheme.specs.padding)
                 .simpleClickable { Timber.d("Caught app bar click through") },
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -90,7 +91,9 @@ fun AppTopBar(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             if (navigationIcon == null) Spacer(TitleInsetWithoutIcon)
-                            else Box(TitleIconModifier) { navigationIcon() }
+                            else Box(TitleIconModifier) {
+                                navigationIcon.invoke()
+                            }
                             Row(titleModifier.alpha(collapsedProgress)) {
                                 ProvideTextStyle(titleStyle) {
                                     titleContent()

@@ -11,7 +11,7 @@ import tm.alashow.rickmorty.domain.entities.Character
 @Serializable
 data class CharactersApiResponse(
     @SerialName("info")
-    val paginationInfo: PaginationInfo,
+    val paginationInfo: PaginationInfo = PaginationInfo(),
 
     @SerialName("results")
     val results: List<Character> = emptyList(),

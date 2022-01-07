@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.insets.ui.LocalScaffoldPadding
+import com.google.accompanist.insets.ui.Scaffold
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
@@ -34,9 +34,9 @@ import tm.alashow.navigation.screens.LeafScreen
 import tm.alashow.rickmorty.domain.entities.Character
 import tm.alashow.rickmorty.domain.entities.CharacterId
 import tm.alashow.rickmorty.domain.entities.Location
+import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.rickmorty.ui.character.components.CharacterColumn
 import tm.alashow.rickmorty.ui.character.components.CharacterStatusDot
-import tm.alashow.rickmorty.ui.character.R
 import tm.alashow.ui.components.*
 import tm.alashow.ui.theme.AppTheme
 
@@ -164,7 +164,7 @@ private fun CharacterDetailsHeader(character: Character) {
             label = stringResource(R.string.character_status),
             value = character.status,
             separator = {
-                CharacterStatusDot(character)
+                CharacterStatusDot(character = character)
             }
         )
         CharacterDetailRow(

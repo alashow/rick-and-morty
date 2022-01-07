@@ -1,3 +1,7 @@
+/*
+ * Copyright (C) 2022, Alashov Berkeli
+ * All rights reserved.
+ */
 package tm.alashow.rickmorty.ui.character.components
 
 import androidx.compose.foundation.layout.*
@@ -67,7 +71,7 @@ fun CharacterRow(
                     horizontalArrangement = Arrangement.spacedBy(AppTheme.specs.paddingSmall),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    CharacterStatusDot(character, loadingModifier)
+                    CharacterStatusDot(character = character, modifier = loadingModifier)
                     Text(
                         text = character.description,
                         maxLines = 2,

@@ -80,9 +80,9 @@ object CharacterStoresModule {
             },
             writer = { params, response ->
                 txRunner {
-                    // requesting the first page means we're refreshing the whole table
+                    // requesting the first page means we're refreshing all pages
                     if (params.page == 0)
-                        dao.deleteAll()
+                        dao.delete(params)
                     val entries = response.mapIndexed { index, it ->
                         it.copy(
                             params = params.toString(),

@@ -4,7 +4,6 @@
  */
 package tm.alashow.rickmorty.data
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable

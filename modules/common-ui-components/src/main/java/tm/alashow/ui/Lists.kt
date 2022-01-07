@@ -62,6 +62,7 @@ fun LazyListState.rememberIsScrollingState(
 
 fun LazyPagingItems<*>.isSourceLoading() = loadState.source.refresh == LoadState.Loading
 fun LazyPagingItems<*>.isMediatorLoading() = loadState.mediator?.refresh == LoadState.Loading
+fun LazyPagingItems<*>.isLoading() = isSourceLoading() || isMediatorLoading()
 fun LazyPagingItems<*>.isInitialLoading() = (isSourceLoading() || isMediatorLoading()) && itemCount == 0
 fun LazyPagingItems<*>.isRefreshing() = (isSourceLoading() || isMediatorLoading()) && itemCount > 0
 fun LazyPagingItems<*>.isAppendLoading() = loadState.append == LoadState.Loading
